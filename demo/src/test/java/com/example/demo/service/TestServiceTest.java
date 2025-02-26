@@ -1,7 +1,11 @@
 package com.example.demo.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.demo.model.TestTbVO;
 import com.example.demo.repository.TestRepository;
@@ -48,11 +53,15 @@ class TestServiceTest {
 //		given
 		given(testRepository.findAll()).willReturn(list);
 		
-		// When
-        List<TestTbVO> result = testService.getTestData();
-        
-        assertThat(result).hasSize(2);
-        assertThat(result.get(0).getTestPk()).isEqualTo(1L);
+		// When: 서비스 메서드 호출
+	    List<TestTbVO> result = testService.getTestData();
+
+	    // Then: 결과 검증
+	    assertEquals(result.get(0).getTestPk(), Long.valueOf(1L));
+	    assertEquals(result.get(1).getTestPk(), Long.valueOf(2L));
+	    then(testRepository).should(times(1)).findAll();
+	 // 후속 상호작용이 없었는지 검증
+	    then(testRepository).shouldHaveNoMoreInteractions();
 	}
 
 }
