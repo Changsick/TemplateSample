@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,5 +26,12 @@ public class TestTbVO {
 	
 	@Column(name = "test_col2")
 	private String testCol2;
+
+	@Builder(builderClassName = "setAllArgsBuilder", builderMethodName = "setAllArgsBuilder")
+	public TestTbVO(Long testPk, Integer testCol1, String testCol2) {
+		this.testPk = testPk;
+		this.testCol1 = testCol1;
+		this.testCol2 = testCol2;
+	}
 	
 }

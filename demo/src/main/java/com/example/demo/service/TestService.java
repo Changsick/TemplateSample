@@ -16,7 +16,7 @@ public class TestService {
 	private final TestRepository testRepository;
 	
 	public List<TestTbVO> getTestData() {
-		
+//		List<TestTbVO> list = testRepository.findByTestCol1(1);
 		return testRepository.findAll();
 	}
 
